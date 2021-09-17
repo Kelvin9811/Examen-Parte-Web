@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { login } from '../utils/utils';
 import { useHistory } from "react-router-dom";
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -32,19 +33,20 @@ const theme = createTheme();
 
 
 function LoginScreen() {
+
+
   let history = useHistory();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     const role = login(data.get('email'), data.get('password'))
-
     switch (role) {
       case 0:
         history.push('/UserServices')
         break;
 
       case 1:
+        history.push('/AdminAverage')
 
         break;
 

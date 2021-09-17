@@ -1,3 +1,4 @@
+import { useEffect,useState } from 'react';
 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -37,15 +38,15 @@ const theme = createTheme();
 
 function UserServices() {
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const [empelados, setEmpelados] = useState([]);
+  const [servicios, setServicios] = useState([]);
 
-    const role = login(data.get('email'), data.get('password'))
+  useEffect(() => {
+    setEmpelados(empeladosConsulta)
+    setServicios(serviciosConsulta)
+  }, [])
 
 
-
-  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,7 +84,11 @@ function UserServices() {
         <Typography component="h1" variant="h5">
           Promedio por empleado
         </Typography>
-        <EmployAverages />
+
+        {empelados.map((row) => (
+          <EmployAverages empleado={row} />
+        ))}
+
       </Box>
       <Box
         sx={{
@@ -98,7 +103,10 @@ function UserServices() {
         <Typography component="h1" variant="h5">
           Promedio por Servicio
         </Typography>
-        <ServiceAverages />
+
+        {servicios.map((row) => (
+          <ServiceAverages servicio={row} />
+        ))}
 
       </Box>
 
@@ -111,4 +119,16 @@ function UserServices() {
 export default UserServices;
 
 
+const empeladosConsulta = [{
+  id: "Empleado 1"
+}, {
+  id: "Empleado 2"
+}]
+
+
+const serviciosConsulta = [{
+  id: "Servicio 1"
+}, {
+  id: "Servicio 2"
+}]
 

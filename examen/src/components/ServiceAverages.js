@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import * as React from 'react';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
@@ -6,73 +7,109 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
+export default function ServiceAverages(props) {
 
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+  const [serviciosDelUsuario, setServiciosDelUsuario] = useState([]);
+  var promedio = 0;
 
-function preventDefault(event) {
-  event.preventDefault();
-}
+  useEffect(() => {
+    console.log("Consulta servicios realizados por servicio: ", props.servicio);
+    setServiciosDelUsuario(ejemploServicios)
+  }, [])
 
-export default function ServiceAverages() {
   return (
     <React.Fragment>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Servicio</TableCell>
+            <TableCell>Empleado</TableCell>
             <TableCell>Calidad de servicio</TableCell>
             <TableCell>Observación</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{`$${row.amount}`}</TableCell>
-              <TableCell>{row.name}</TableCell>
-            </TableRow>
-          ))}
+          {serviciosDelUsuario.map((row) => {
+            promedio = promedio + row.calidad;
+            return (
+              <TableRow key={row.id}>
+                <TableCell>{props.servicio.id}</TableCell>
+                <TableCell>{row.empleado}</TableCell>
+                <TableCell>{`${row.calidad}`}</TableCell>
+                <TableCell>{row.observacion}</TableCell>
+              </TableRow>
+            )
+          }
+          )}
         </TableBody>
       </Table>
+      <Box
+        sx={{
+          marginTop: 2,
+          marginBottom: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="body2" color="text.secondary" align="center">
+          {'Promedio de calidad = ' + (promedio / serviciosDelUsuario.length).toFixed(2)}
+        </Typography>
+      </Box>
+
     </React.Fragment>
   );
 }
+
+
+
+
+const ejemploServicios = [{
+  id: 1,
+  usuario: "Usuario 1",
+  empleado: "Empleado 1",
+  calidad: 100,
+  servicio: "Servicio 1",
+  observacion: "asdasd"
+}, {
+  id: 2,
+  usuario: "Usuario 2",
+  empleado: "Empleado 1",
+  calidad: 0,
+  servicio: "Servicio 1",
+  observacion: ""
+}
+  , {
+  id: 3,
+  usuario: "Usuario 1",
+  empleado: "Empleado 2",
+  calidad: 0,
+  servicio: "Servicio 1",
+  observacion: "qweqwe"
+}, {
+  id: 4,
+  usuario: "Usuario 2",
+  empleado: "Empleado 1",
+  calidad: 0,
+  servicio: "Servicio 1",
+  observacion: " ass ds"
+}, {
+  id: 5,
+  usuario: "Usuario 1",
+  empleado: "Empleado 1",
+  calidad: 0,
+  servicio: "Servicio 1",
+  observacion: "12"
+},
+{
+  id: 6,
+  usuario: "Usuario 1",
+  empleado: "Empleado 1",
+  calidad: 0,
+  servicio: "Servicio 2",
+  observacion: "asd"
+}
+]

@@ -1,5 +1,7 @@
 
 import * as React from 'react';
+
+import { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -38,11 +40,7 @@ function UserServices() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     const role = login(data.get('email'), data.get('password'))
-
-   
-
   };
 
   return (
@@ -102,6 +100,5 @@ function UserServices() {
 }
 
 export default UserServices;
-
 
 

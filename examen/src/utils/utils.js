@@ -4,7 +4,7 @@ export function login(email, password) {
 
     console.log(email, password);
 
-    
+
 
     /*var connection = new ActiveXObject("ADODB.Connection");
     var connectionstring = "Data Source=<127.0.0.1>;Initial Catalog=<catalog>;User ID=<user>;Password=<password>;Provider=SQLOLEDB";
@@ -22,16 +22,15 @@ export function login(email, password) {
     rs.close;
     connection.close*/
     pausecomp(1000)
-    return 0;
+    return 1;
 }
 
 
-function pausecomp(millis)
-{
+function pausecomp(millis) {
     var date = new Date();
     var curDate = null;
     do { curDate = new Date(); }
-    while(curDate-date < millis);
+    while (curDate - date < millis);
 }
 
 
