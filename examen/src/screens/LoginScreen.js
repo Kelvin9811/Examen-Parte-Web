@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { login } from '../utils/utils';
+import { useHistory } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -31,7 +32,7 @@ const theme = createTheme();
 
 
 function LoginScreen() {
-
+  let history = useHistory();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -40,7 +41,7 @@ function LoginScreen() {
 
     switch (role) {
       case 0:
-        window.open("/screens/UserServices");
+        history.push('/UserServices')
         break;
 
       case 1:
