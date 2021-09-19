@@ -1,122 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { login } from './utils/utils';
+import  LoginScreen  from "./screens/LoginScreen";
+import UserServices from "./screens/UserServices";
+import AdminAverage from "./screens/AdminAverage";
 
-function Copyright(props) {
+export default function App() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://www.facebook.com/salome.lagos.21">
-        Salome Lagos
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
+    <Router>
+      <div>
+        <Switch>
+          <Route path="/LoginScreen">
+            <LoginScreen />
+          </Route>
+          <Route path="/users">
+            <UserServices />
+          </Route>
+          <Route path="/">
+            <AdminAverage />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
-const theme = createTheme();
-
-
-function App() {
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-
-    const role = login(data.get('email'), data.get('password'))
-
-    switch (role) {
-      case 0:
-
-      
-        break;
-
-      case 1:
-
-        break;
-
-      default:
-        break;
-    }
-
-
-  };
-
-  return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Ingresar
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Correo electrónico"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Contraseña"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Ingresar
-            </Button>
-
-          </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
-    </ThemeProvider>
-  );
-
+function Home() {
+  return <h2>Home</h2>;
 }
 
-export default App;
+function About() {
+  return <h2>About</h2>;
+}
 
-
-
+function Users() {
+  return <h2>Users</h2>;
+}

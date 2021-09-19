@@ -1,4 +1,3 @@
-
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -31,7 +30,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 
-function AdminAverage() {
+function LoginScreen() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -106,7 +105,7 @@ function AdminAverage() {
 
           </Box>
         </Box>
-      
+
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
@@ -114,7 +113,7 @@ function AdminAverage() {
 
 }
 
-export default AdminAverage;
+export default LoginScreen;
 
 
 
