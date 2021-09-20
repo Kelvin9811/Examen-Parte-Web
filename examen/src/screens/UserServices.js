@@ -41,20 +41,7 @@ function UserServices() {
 
     const role = login(data.get('email'), data.get('password'))
 
-    switch (role) {
-      case 0:
-
-
-        break;
-
-      case 1:
-
-        break;
-
-      default:
-        break;
-    }
-
+   
 
   };
 
@@ -64,7 +51,7 @@ function UserServices() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
+            marginTop: 2,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -86,11 +73,26 @@ function UserServices() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          marginRight:23,
-          marginLeft:23,
+          marginRight: 10,
+          marginLeft: 10,
         }}
       >
         <Services></Services>
+        <Box
+          sx={{
+            width: 150, marginTop: 5
+          }}
+        >
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Actualizar
+          </Button>
+        </Box>
       </Box>
 
       <Copyright sx={{ mt: 8, mb: 4 }} />

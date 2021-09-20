@@ -6,8 +6,6 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -54,14 +52,13 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Services() {
+export default function EmployAverages() {
   return (
     <React.Fragment>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Servicio</TableCell>
-            <TableCell>Empleado</TableCell>
             <TableCell>Calidad de servicio</TableCell>
             <TableCell>Observación</TableCell>
           </TableRow>
@@ -69,41 +66,13 @@ export default function Services() {
         <TableBody>
           {rows.map((row) => (
             <TableRow key={row.id}>
-              <TableCell >{row.date}</TableCell>
+              <TableCell>{row.date}</TableCell>
+              <TableCell>{`$${row.amount}`}</TableCell>
               <TableCell>{row.name}</TableCell>
-              <TableCell padding={"normal"}>
-                <Box sx={{ width: 120 }}>
-                  <TextField
-                    size={"small"}
-                    margin="normal"
-                    fullWidth
-                    name="password"
-                    label="Calidad"
-                    type="number"
-
-                    pattern={'[0-9]*'}
-                    id={"txtQuality" + row.id}
-                  />
-                </Box>
-
-
-              </TableCell>
-              <TableCell>
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  size={"small"}
-
-                  name="password"
-                  label="Observación"
-                  id={"txtObservation" + row.id}
-                />
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-
     </React.Fragment>
   );
 }
