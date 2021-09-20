@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Marcos Rodriguez/Desktop/SQL/DB Browser for SQLite/Salome.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="2275"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,5:mainAviso"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Usuario" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="101"/><column index="2" value="76"/><column index="3" value="78"/><column index="4" value="52"/><column index="5" value="93"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">ALTER TABLE Formulario ADD COLUMN observacion TEXT;
+
+DROP TABLE Usuario
+
+CREATE TABLE Usuario (
+	id_usuario INTEGER PRIMARY KEY,
+	nombre TEXT,
+	apellido TEXT,
+	rol TEXT,
+	pass TEXT
+)
+
+CREATE TABLE Servicio ( 
+    id_formulario INTEGER PRIMARY KEY, 
+    id_usuario INTEGER, 
+	id_empleado INTEGER,
+    calidad_servicio INTEGER,
+	servicio TEXT,
+	observacion TEXT,
+    FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
+	FOREIGN KEY (id_empleado) REFERENCES Empleado(id_empleado)
+);
+
+CREATE TABLE Empleado (
+	id_empleado INTEGER PRIMARY KEY,
+	nombre_empleado TEXT,
+	apellido_empleado TEXT
+);
+
+CREATE TABLE Aviso (
+	id_aviso INTEGER PRIMARY KEY,
+	id_formulario INTEGER,
+	calificacion INTEGER,
+	FOREIGN KEY (id_formulario) REFERENCES servicio(id_formulario)
+);
+
+
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
