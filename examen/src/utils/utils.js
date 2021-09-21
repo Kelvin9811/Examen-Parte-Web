@@ -1,28 +1,9 @@
+import Axios, { AxiosRequestConfig } from "axios";
 
 
-export function login(email, password) {
+export async function login(email, password) {
 
-    console.log(email, password);
-
-
-
-    /*var connection = new ActiveXObject("ADODB.Connection");
-    var connectionstring = "Data Source=<127.0.0.1>;Initial Catalog=<catalog>;User ID=<user>;Password=<password>;Provider=SQLOLEDB";
-
-    connection.Open(connectionstring);
-    var rs = new ActiveXObject("ADODB.Recordset");
-
-    rs.Open("SELECT * FROM table", connection);
-    rs.MoveFirst
-    while (!rs.eof) {
-        document.write(rs.fields(1));
-        rs.movenext;
-    }
-
-    rs.close;
-    connection.close*/
-    pausecomp(1000)
-    return 1;
+    //return currentUser;
 }
 
 
@@ -34,4 +15,40 @@ function pausecomp(millis) {
 }
 
 
+export const callApiAxios = async (url, method, data, typeData) => {
+
+    let baseURL = 'http://localhost:3001/'
+    let urlComplete = baseURL + url;
+    let configAxios = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer`,
+            'x-end-user-terminal': '186.28.75.10',
+            'x-end-user-login': 'user',
+            'x-request-id': '4f9aa743-0cad-46f0-b055-c42e0ab6e216',
+            'x-end-user-request-date-time': '2019-10-11T23:00:27Z',
+            'Access-Control-Allow-Origin': '*'
+        },
+        method: method,
+        timeout: 10000,
+    }
+    if (typeData === 'Params') {
+        configAxios.params = data
+    } else if (typeData === 'Body') {
+        configAxios.data = data
+    } else {
+        configAxios.params = data.params
+        configAxios.data = data.body
+    }
+
+    
+
+    const respuesta = await Axios(urlComplete, configAxios).then((res) => {
+        //console.log(res)
+        return { data: res.data }
+    }).catch(function (error) {
+        console.log('catch ->>', error)
+    });
+    return respuesta;
+}
 

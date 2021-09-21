@@ -9,16 +9,25 @@ import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { callApiAxios } from '../utils/utils';
 
 export default function ServiceAverages(props) {
 
-  const [serviciosDelUsuario, setServiciosDelUsuario] = useState([]);
+  const [serviciosDelUsuarioPorServicioID, setserviciosDelUsuarioPorServicioID] = useState([]);
   var promedio = 0;
 
+  const getServices = async () => {
+    await callApiAxios('sql/GetServicesById', 'GET', { id_formulario: props.servicio.id_serviciosimple }, 'Params').then((ress) => {
+      console.log(ress.data);
+
+      setserviciosDelUsuarioPorServicioID(ress.data)
+    })
+  }
   useEffect(() => {
-    console.log("Consulta servicios realizados por servicio: ", props.servicio);
-    setServiciosDelUsuario(ejemploServicios)
+    //setserviciosDelUsuarioPorServicioID(ejemploServicios)
+    getServices();
   }, [])
+
 
   return (
     <React.Fragment>
@@ -32,13 +41,13 @@ export default function ServiceAverages(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {serviciosDelUsuario.map((row) => {
-            promedio = promedio + row.calidad;
+          {serviciosDelUsuarioPorServicioID.map((row) => {
+            promedio = promedio + row.calidad_servicio;
             return (
-              <TableRow key={row.id}>
-                <TableCell>{props.servicio.id}</TableCell>
-                <TableCell>{row.empleado}</TableCell>
-                <TableCell>{`${row.calidad}`}</TableCell>
+              <TableRow key={row.id_formulario}>
+                <TableCell>{row.id_serviciosimple}</TableCell>
+                <TableCell>{row.id_empleado}</TableCell>
+                <TableCell>{`${row.calidad_servicio}`}</TableCell>
                 <TableCell>{row.observacion}</TableCell>
               </TableRow>
             )
@@ -56,7 +65,7 @@ export default function ServiceAverages(props) {
         }}
       >
         <Typography variant="body2" color="text.secondary" align="center">
-          {'Promedio de calidad = ' + (promedio / serviciosDelUsuario.length).toFixed(2)}
+          {'Promedio de calidad = ' + (promedio / serviciosDelUsuarioPorServicioID.length).toFixed(2)}
         </Typography>
       </Box>
 

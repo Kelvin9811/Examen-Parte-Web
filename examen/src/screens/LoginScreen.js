@@ -12,8 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { login } from '../utils/utils';
+import { callApiAxios, login } from '../utils/utils';
 import { useHistory } from "react-router-dom";
+import { Alert } from '@mui/material';
 
 
 function Copyright(props) {
@@ -36,25 +37,37 @@ function LoginScreen() {
 
 
   let history = useHistory();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const role = login(data.get('email'), data.get('password'))
-    switch (role) {
-      case 0:
-        history.push('/UserServices')
-        break;
+    const email = data.get('email');
+    const password = data.get('password');
+    let loginUser = null;
 
-      case 1:
-        history.push('/AdminAverage')
+    const ress = await callApiAxios('sql/getUsers', 'GET', {}, 'Params')
+    console.log(ress.data);
 
-        break;
+    ress.data.forEach(user => {
+      if (user.nombre == email && user.pass == password) {
+        loginUser = user
+      }
+    });
 
-      default:
-        break;
+    if (loginUser) {
+      switch (loginUser.rol) {
+        case '0':
+          history.push({ pathname: '/AdminAverage', search: '?the=search', state: { user: loginUser } });
+          break;
+        case '1':
+          history.push({ pathname: '/UserServices', search: '?the=search', state: { user: loginUser } });
+          break;
+        default:
+          break;
+      }
     }
-
-
+    else {
+      console.log("usuario no existe");
+    }
   };
 
   return (

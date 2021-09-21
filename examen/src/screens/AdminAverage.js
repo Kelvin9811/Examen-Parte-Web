@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
@@ -15,7 +15,7 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { login } from '../utils/utils';
+import { callApiAxios, login } from '../utils/utils';
 import Services from '../components/Services';
 import EmployAverages from '../components/EmployAverages';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
@@ -41,9 +41,22 @@ function UserServices() {
   const [empelados, setEmpelados] = useState([]);
   const [servicios, setServicios] = useState([]);
 
+
+  const getEmpleadosServicios = async () => {
+    callApiAxios('sql/GetEmploys', 'GET', {}, 'Params').then((ress) => {
+      setEmpelados(ress.data)
+    })
+
+    callApiAxios('sql/GetSimpleServices', 'GET', {}, 'Params').then((ress) => {
+      setServicios(ress.data)
+    })
+
+
+  }
+
+
   useEffect(() => {
-    setEmpelados(empeladosConsulta)
-    setServicios(serviciosConsulta)
+    getEmpleadosServicios()
   }, [])
 
 

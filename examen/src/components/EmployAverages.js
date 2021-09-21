@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { callApiAxios } from '../utils/utils';
 
 export default function EmployAverages(props) {
 
@@ -17,11 +18,20 @@ export default function EmployAverages(props) {
 
   var promedio = 0;
 
+  const getServices = async () => {
+    console.log(props.empleado);
+
+    callApiAxios('sql/GetServicesByEmploy', 'GET', { id_empleado: props.empleado.id_empleado }, 'Params').then((ress) => {
+      setServiciosDelUsuario(ress.data)
+    })
+  }
   useEffect(() => {
+    getServices()
     console.log("Consulta servicios realizados por empleado: ", props.empleado);
-    setServiciosDelUsuario(ejemploServicios)
+    
 
   }, [])
+
 
 
   return (
@@ -37,12 +47,12 @@ export default function EmployAverages(props) {
         </TableHead>
         <TableBody>
           {serviciosDelUsuario.map((row) => {
-            promedio = promedio + row.calidad;
+            promedio = promedio + row.calidad_servicio;
             return (
-              <TableRow key={row.id}>
-                <TableCell>{row.servicio}</TableCell>
-                <TableCell>{props.empleado.id}</TableCell>
-                <TableCell>{`${row.calidad}`}</TableCell>
+              <TableRow key={row.id_formulario}>
+                <TableCell>{row.id_serviciosimple}</TableCell>
+                <TableCell>{row.id_empleado}</TableCell>
+                <TableCell>{`${row.calidad_servicio}`}</TableCell>
                 <TableCell>{row.observacion}</TableCell>
               </TableRow>
             )

@@ -16,8 +16,9 @@ import SupervisedUserCircleIcon from '@mui/icons-material/SupervisedUserCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { login } from '../utils/utils';
+import { callApiAxios, login } from '../utils/utils';
 import Services from '../components/Services';
+import { useHistory } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -34,14 +35,23 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-
 function UserServices() {
 
-  const handleSubmit = (event) => {
+  let history = useHistory();
+
+  const user = history.location.state.user;
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const role = login(data.get('email'), data.get('password'))
+    /*const data = new FormData(event.currentTarget);
+    const role = login(data.get('email'), data.get('password'))*/
+
+  
+
   };
+
+
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -59,15 +69,15 @@ function UserServices() {
             <Person />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Nombre del usuario
+            {user.nombre} {user.apellido}
           </Typography>
 
         </Box>
 
       </Container>
-      <Box
+      <Box onSubmit={handleSubmit}
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -75,7 +85,7 @@ function UserServices() {
           marginLeft: 10,
         }}
       >
-        <Services></Services>
+        <Services user={user}></Services>
         <Box
           sx={{
             width: 150, marginTop: 5
@@ -86,6 +96,7 @@ function UserServices() {
             type="submit"
             fullWidth
             variant="contained"
+            
             sx={{ mt: 3, mb: 2 }}
           >
             Actualizar
