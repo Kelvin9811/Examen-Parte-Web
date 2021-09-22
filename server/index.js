@@ -205,6 +205,19 @@ app.get("/sql/GetSimpleServices", (req, res) => {
 
 
 
+app.post("/sql/updateQulityObservation", (req, res) => {
+
+    db.serialize(() => {
+        db.exec(`UPDATE Servicio SET calidad_servicio = ${parseInt(req.query.calidad_servicio)}, observacion= '${req.query.observacion}' WHERE id_formulario = ${parseInt(req.query.id_formulario)}`, (err, ress) => {
+            if (err) {
+                console.error(err.message);
+            }
+            res.send(ress)
+        });
+    });
+})
+
+
 
 app.listen(3001, () => {
     console.log("Running services on 3001");

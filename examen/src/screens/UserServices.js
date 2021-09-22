@@ -41,18 +41,6 @@ function UserServices() {
 
   const user = history.location.state.user;
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    /*const data = new FormData(event.currentTarget);
-    const role = login(data.get('email'), data.get('password'))*/
-
-  
-
-  };
-
-
-
-
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -75,7 +63,7 @@ function UserServices() {
         </Box>
 
       </Container>
-      <Box onSubmit={handleSubmit}
+      <Box
         sx={{
           marginTop: 2,
           display: 'flex',
@@ -86,22 +74,7 @@ function UserServices() {
         }}
       >
         <Services user={user}></Services>
-        <Box
-          sx={{
-            width: 150, marginTop: 5
-          }}
-        >
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Actualizar
-          </Button>
-        </Box>
       </Box>
 
       <Copyright sx={{ mt: 8, mb: 4 }} />

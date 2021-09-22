@@ -41,7 +41,7 @@ export const callApiAxios = async (url, method, data, typeData) => {
         configAxios.data = data.body
     }
 
-    
+    console.log(configAxios);
 
     const respuesta = await Axios(urlComplete, configAxios).then((res) => {
         //console.log(res)
