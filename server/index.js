@@ -118,7 +118,6 @@ app.get("/sql/GetServices", (req, res) => {
 app.get("/sql/GetServicesById", (req, res) => {
 
     db.serialize(() => {
-        console.log(req.query.id_formulario);
         db.all(`select * from Servicio where id_serviciosimple = ${req.query.id_formulario}`, (err, ress) => {
             if (err) {
                 console.error(err.message);
@@ -217,6 +216,37 @@ app.post("/sql/updateQulityObservation", (req, res) => {
     });
 })
 
+
+app.get("/sql/GetAverageServicesById", (req, res) => {
+
+    db.serialize(() => {
+        db.all(`SELECT AVG(calidad_servicio) FROM Servicio WHERE id_serviciosimple = ${req.query.id_formulario}`, (err, ress) => {
+            if (err) {
+                console.error(err.message);
+            }
+            console.log(ress);
+            res.send(ress)
+        });
+    });
+
+
+})
+
+app.get("/sql/GetAverageServicesByEmploy", (req, res) => {
+
+    db.serialize(() => {
+
+        db.all(`SELECT AVG(calidad_servicio) FROM Servicio WHERE id_empleado = ${req.query.id_empleado}`, (err, ress) => {
+            if (err) {
+                console.error(err.message);
+            }
+            console.log(ress);
+            res.send(ress)
+        });
+    });
+
+
+})
 
 
 app.listen(3001, () => {

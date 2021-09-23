@@ -15,21 +15,22 @@ export default function EmployAverages(props) {
 
 
   const [serviciosDelUsuario, setServiciosDelUsuario] = useState([]);
+  const [calidadServiciosPorUsuario, setCalidadServiciosPorUsuario] = useState(0);
 
   var promedio = 0;
 
   const getServices = async () => {
-    console.log(props.empleado);
-
     callApiAxios('sql/GetServicesByEmploy', 'GET', { id_empleado: props.empleado.id_empleado }, 'Params').then((ress) => {
       setServiciosDelUsuario(ress.data)
     })
+    callApiAxios('sql/GetAverageServicesByEmploy', 'GET', { id_empleado: props.empleado.id_empleado }, 'Params').then((ress) => {
+      const calidad = ress.data[0]['AVG(calidad_servicio)'];
+      setCalidadServiciosPorUsuario(parseFloat(calidad))
+    })
+
   }
   useEffect(() => {
     getServices()
-    console.log("Consulta servicios realizados por empleado: ", props.empleado);
-    
-
   }, [])
 
 
@@ -70,7 +71,7 @@ export default function EmployAverages(props) {
         }}
       >
         <Typography variant="body2" color="text.secondary" align="center">
-          {'Promedio de calidad = ' + (promedio / serviciosDelUsuario.length).toFixed(2)}
+          {'Promedio de calidad = ' + calidadServiciosPorUsuario.toFixed(2)}
         </Typography>
       </Box>
     </React.Fragment>
@@ -80,50 +81,3 @@ export default function EmployAverages(props) {
 
 
 
-
-const ejemploServicios = [{
-  id: 1,
-  usuario: "Usuario 1",
-  empleado: "Empleado 1",
-  calidad: 100,
-  servicio: "Servicio 1",
-  observacion: "asdasd"
-}, {
-  id: 2,
-  usuario: "Usuario 2",
-  empleado: "Empleado 1",
-  calidad: 0,
-  servicio: "Servicio 1",
-  observacion: ""
-}
-  , {
-  id: 3,
-  usuario: "Usuario 1",
-  empleado: "Empleado 2",
-  calidad: 0,
-  servicio: "Servicio 1",
-  observacion: "qweqwe"
-}, {
-  id: 4,
-  usuario: "Usuario 2",
-  empleado: "Empleado 1",
-  calidad: 0,
-  servicio: "Servicio 1",
-  observacion: " ass ds"
-}, {
-  id: 5,
-  usuario: "Usuario 1",
-  empleado: "Empleado 1",
-  calidad: 0,
-  servicio: "Servicio 1",
-  observacion: "12"
-},
-{
-  id: 6,
-  usuario: "Usuario 1",
-  empleado: "Empleado 1",
-  calidad: 0,
-  servicio: "Servicio 2",
-  observacion: "asd"
-}
-]
